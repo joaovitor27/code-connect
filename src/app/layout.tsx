@@ -21,7 +21,9 @@ export default function RootLayout({children,}: Readonly<{ children: ReactNode; 
 		<body>
 		<div className={"container"}>
 			<Aside/>
-			{children}
+			<div className={"main-content"}>
+				{children}
+			</div>
 		</div>
 		</body>
 		</html>
