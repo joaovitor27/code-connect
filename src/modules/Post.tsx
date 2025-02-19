@@ -1,5 +1,5 @@
 export interface Post {
-	id: number;
+	id: bigint;
 	cover: string;
 	title: string;
 	slug: string;
@@ -9,7 +9,7 @@ export interface Post {
 }
 
 export interface Author {
-	id: number;
+	id: bigint;
 	name: string;
 	username: string;
 	avatar: string;
