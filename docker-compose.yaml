@@ -1,5 +1,5 @@
 services:
-  postgres:
+  postgres-codeconnect:
     image: postgres:15-alpine
     ports:
       - "5433:5432"

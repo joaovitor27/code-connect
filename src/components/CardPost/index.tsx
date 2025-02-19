@@ -12,7 +12,7 @@ export function CardPost({post, highlight }: Readonly<{ post: Post, highlight?: 
       <article className={styles.card}  style={{ width: highlight ? 993 : 486}}>
         <header className={styles.header}>
           <figure style={{ height: highlight ? 300 : 133}}>
-            <Image src={post.cover} alt={post.title} fill/>
+            <Image src={post.cover} alt={post.title} fill sizes={"100%"}/>
           </figure>
         </header>
         <section className={styles.body}>
