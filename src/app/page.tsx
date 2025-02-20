@@ -4,7 +4,7 @@ import {Prisma} from "@prisma/client";
 import logger from "@/logger";
 import Link from "next/link";
 import db from "../../prisma/migrations/db";
-import {PostWithAuthor} from "@/types/prisma";
+import {PostWithAuthorAndComments} from "@/types/prisma";
 
 
 interface HomeProps {
@@ -36,7 +36,8 @@ async function getPostDb(page: number, search: string) {
 			where,
 			skip: (page - 1) * perPage,
 			include: {
-				author: true
+				author: true,
+				comments: true,
 			}
 		});
 
@@ -55,7 +56,7 @@ export default async function Home({searchParams}: HomeProps) {
 
 	return (
 		<main className={styles.container + " " + styles.grid}>
-			{posts.map((post: PostWithAuthor) => (
+			{posts.map((post: PostWithAuthorAndComments) => (
 				<CardPost post={post} key={post.id}/>
 			))}
 			<div className={styles.pagination}>

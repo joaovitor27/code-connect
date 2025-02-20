@@ -14,5 +14,5 @@ export type CommentWithAuthor = Comment & {
 // Caso queira incluir os comentários dentro do Post
 export type PostWithAuthorAndComments = Post & {
 	author: User;
-	comments: CommentWithAuthor[];
+	comments: Comment[];
 };

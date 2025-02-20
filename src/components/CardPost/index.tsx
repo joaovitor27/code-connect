@@ -3,14 +3,16 @@ import Image from "next/image";
 
 import styles from "./cardpost.module.css";
 import Link from "next/link";
-import {incrementThumbsUp} from "@/actions";
-import {PostWithAuthor} from "@/types/prisma";
+import {incrementThumbsUp, postComment} from "@/actions";
+import {PostWithAuthorAndComments} from "@/types/prisma";
 import {ThumbsUpButton} from "@/components/CardPost/ThumbsUpButton";
+import {ModalComment} from "@/components/ModalComment";
 
 
-export function CardPost({post, highlight}: Readonly<{ post: PostWithAuthor, highlight?: boolean }>) {
+export function CardPost({post, highlight}: Readonly<{ post: PostWithAuthorAndComments, highlight?: boolean }>) {
 
 	const submitThumbsUp = incrementThumbsUp.bind(null, post);
+	const submitComment = postComment.bind(null, post);
 
 	return (
 		<article className={styles.card} style={{width: highlight ? 993 : 486}}>
@@ -28,11 +30,12 @@ export function CardPost({post, highlight}: Readonly<{ post: PostWithAuthor, hig
 				<div>
 					<form action={submitThumbsUp}>
 						<ThumbsUpButton/>
+						<p>{post.likes}</p>
 					</form>
-					<p>
-						{post.likes}
-					</p>
-
+					<div>
+						<ModalComment action={submitComment}/>
+						<p>{post.comments.length}</p>
+					</div>
 				</div>
 				<Avatar src={post.author.avatar} alt={post.author.username} name={post.author.username}/>
 			</footer>

@@ -14,7 +14,8 @@ async function getPost(slug: string) {
         slug: slug
       },
       include: {
-        author: true
+        author: true,
+        comments: true,
       }
     })
 
