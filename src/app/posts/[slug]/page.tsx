@@ -4,25 +4,32 @@ import html from 'remark-html';
 import {CardPost} from "@/components/CardPost";
 
 import styles from './page.module.css';
+import db from "../../../../prisma/migrations/db";
+import {redirect} from "next/navigation";
 
 async function getPost(slug: string) {
-  const res = await fetch(`http://localhost:3042/posts?slug=${slug}`);
-  if (!res.ok) {
-    logger.error(`Failed to fetch post with slug ${slug}`);
-    return {};
-  }
-  logger.info(`Fetched post with slug ${slug}`);
-  const data = await res.json();
-  if (!data) {
-    logger.error(`Failed to parse post with slug ${slug}`);
-    return {};
-  }
-  const post = data[0];
+  try {
+    const post = await db.post.findUnique({
+      where: {
+        slug: slug
+      },
+      include: {
+        author: true
+      }
+    })
 
-  const processedContent = await remark().use(html).process(post.markdown);
-  post.markdown = processedContent.toString();
+    if (!post) {
+      throw new Error("Post not found");
+    }
 
-  return post;
+    const processedContent = await remark().use(html).process(post.markdown);
+    post.markdown = processedContent.toString();
+
+    return post;
+  } catch (error) {
+    logger.error("Failed to fetch post", {slug, error});
+    redirect('/not-found');
+  }
 }
 
 export default async function PagePost({params,}: { params: Promise<{ slug: string }> }) {

@@ -3,9 +3,10 @@ import {Prompt} from "next/font/google";
 import "./globals.css";
 import {ReactNode} from "react";
 import {Aside} from "@/components/Aside";
+import {SearchForm} from "@/components/SearchForm";
 
 const prompt = Prompt({
-	weight: ["400", "600"],
+	weight: ['400', '500', '600'],
 	subsets: ["latin"],
 	display: "swap",
 })
@@ -22,6 +23,7 @@ export default function RootLayout({children,}: Readonly<{ children: ReactNode; 
 		<div className={"container"}>
 			<Aside/>
 			<div className={"main-content"}>
+				<SearchForm/>
 				{children}
 			</div>
 		</div>
