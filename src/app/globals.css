@@ -20,3 +20,13 @@ body {
 .main-content {
     flex-grow: 1;
 }
+
+a {
+    color: #81FE88;
+    text-decoration: none;
+
+    &:hover {
+        opacity: 0.6;
+        text-decoration: underline;
+    }
+}

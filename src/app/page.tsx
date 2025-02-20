@@ -1,10 +1,11 @@
 import styles from "./page.module.css";
 import {CardPost} from "@/components/CardPost";
-import {Post} from "@/modules/Post";
 import {Prisma} from "@prisma/client";
 import logger from "@/logger";
 import Link from "next/link";
 import db from "../../prisma/migrations/db";
+import {PostWithAuthor} from "@/types/prisma";
+
 
 interface HomeProps {
 	searchParams: Promise<{ [key: string]: string | undefined }>;
@@ -21,7 +22,7 @@ async function getPostDb(page: number, search: string) {
 			};
 		}
 
-		const perPage = 6;
+		const perPage = 4;
 		const prev = page > 1 ? page - 1 : null;
 		const total = await db.post.count({where});
 		const totalPages = Math.ceil(total / perPage);
@@ -30,7 +31,7 @@ async function getPostDb(page: number, search: string) {
 		const posts = await db.post.findMany({
 			take: perPage,
 			orderBy: {
-				createdAt: 'desc'
+				id: 'desc'
 			},
 			where,
 			skip: (page - 1) * perPage,
@@ -54,7 +55,7 @@ export default async function Home({searchParams}: HomeProps) {
 
 	return (
 		<main className={styles.container + " " + styles.grid}>
-			{posts.map((post: Post) => (
+			{posts.map((post: PostWithAuthor) => (
 				<CardPost post={post} key={post.id}/>
 			))}
 			{prev && <Link href={{pathname: '/', query: {page: prev, search: search}}}>Anterior</Link>}
