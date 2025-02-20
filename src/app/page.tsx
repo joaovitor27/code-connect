@@ -58,8 +58,11 @@ export default async function Home({searchParams}: HomeProps) {
 			{posts.map((post: PostWithAuthor) => (
 				<CardPost post={post} key={post.id}/>
 			))}
-			{prev && <Link href={{pathname: '/', query: {page: prev, search: search}}}>Anterior</Link>}
-			{next && <Link href={{pathname: '/', query: {page: next, search: search}}}>Próximo</Link>}
+			<div className={styles.pagination}>
+				{prev && <Link href={{pathname: '/', query: {page: prev, search: search}}}>Anterior</Link>}
+				{prev && next && <div className={styles.line}></div>}
+				{next && <Link href={{pathname: '/', query: {page: next, search: search}}}>Próximo</Link>}
+			</div>
 		</main>
 	);
 }

@@ -2,5 +2,15 @@
     display: flex;
     gap: 24px;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
+}
+
+.pagination {
+    display: flex;
+    gap: 8px;
+}
+
+.line {
+    height: 100%;
+    border: 1px solid #5bb961;
 }
